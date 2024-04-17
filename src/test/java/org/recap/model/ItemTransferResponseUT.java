@@ -1,7 +1,8 @@
 package org.recap.model;
 
 import org.junit.jupiter.api.Test;
-import org.recap.BaseTestCase;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.ScsbCommonConstants;
 import org.recap.model.transfer.ItemDestination;
 import org.recap.model.transfer.ItemSource;
@@ -14,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by Anitha on 13/6/20.
  */
-
-public class ItemTransferResponseUT extends BaseTestCase {
+@ExtendWith(MockitoExtension.class)
+public class ItemTransferResponseUT {
 
     @Test
     public void itemTransferResponse(){

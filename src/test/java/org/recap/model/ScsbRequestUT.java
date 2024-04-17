@@ -1,13 +1,15 @@
 package org.recap.model;
 
 import org.junit.jupiter.api.Test;
-import org.recap.BaseTestCase;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ScsbRequestUT extends BaseTestCase {
+@ExtendWith(MockitoExtension.class)
+public class ScsbRequestUT{
 
     @Test
     public void scsbRequest(){

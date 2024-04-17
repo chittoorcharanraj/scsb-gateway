@@ -2,10 +2,12 @@ package org.recap.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +23,8 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EncryptEmailAddressRestControllerUT extends BaseControllerUT{
+@ExtendWith(MockitoExtension.class)
+public class EncryptEmailAddressRestControllerUT {
 
     @InjectMocks
     EncryptEmailAddressRestController encryptEmailAddressRestController;

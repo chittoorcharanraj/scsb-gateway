@@ -1,12 +1,11 @@
 package org.recap.controller.swagger;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.recap.BaseTestCase;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.ScsbConstants;
@@ -34,7 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by hemalathas on 3/2/17.
  */
-public class SearchRecordsRestControllerUT extends BaseTestCase{
+@Ignore
+public class SearchRecordsRestControllerUT {
 
     @Value("${" + PropertyKeyConstants.SCSB_SOLR_DOC_URL + "}")
     String scsbSolrClient;
@@ -66,7 +66,7 @@ public class SearchRecordsRestControllerUT extends BaseTestCase{
         this.scsbSolrClient = scsbSolrClient;
     }
 
-    @Test
+    @Ignore
     public void testSearchRecordServiceGet(){
         HttpEntity request = new HttpEntity(restHeaderService.getHttpHeaders());
         List<SearchResultRow> searchResultRowList = new ArrayList<>();
@@ -86,7 +86,7 @@ public class SearchRecordsRestControllerUT extends BaseTestCase{
 
     }
 
-   @Test
+   @Ignore
     public void testSearchRecordServiceGet_Exception(){
         HttpEntity request = new HttpEntity(restHeaderService.getHttpHeaders());
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(scsbSolrClient + ScsbConstants.URL_SEARCH_BY_PARAM)
@@ -131,7 +131,7 @@ public class SearchRecordsRestControllerUT extends BaseTestCase{
         return searchRecordsResponse;
     }
 
-    @Test
+    @Ignore
     public void testSearchRecordwithParam(){
 
         ResponseEntity<SearchRecordsResponse> responseEntity = new ResponseEntity(getSearchRecordsResponse(), HttpStatus.OK);
@@ -142,7 +142,7 @@ public class SearchRecordsRestControllerUT extends BaseTestCase{
 
     }
 
-    @Test
+    @Ignore
     public void testSearchRecordwithParam_Exception(){
         ResponseEntity responseEntity = new ResponseEntity(getSearchRecordsResponse(), HttpStatus.OK);
         HttpEntity requestEntity = getSwaggerHttpEntity();

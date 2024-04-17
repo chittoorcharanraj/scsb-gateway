@@ -2,11 +2,13 @@ package org.recap.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.PropertyKeyConstants;
 import org.recap.service.RestHeaderService;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * Created by Anithav on 13/06/20.
  */
 
-public class DeAccessionRestControllerUT extends BaseControllerUT{
+@ExtendWith(MockitoExtension.class)
+public class DeAccessionRestControllerUT{
 
     @Value("${" + PropertyKeyConstants.SCSB_CIRC_URL + "}")
     String scsbCircUrl;

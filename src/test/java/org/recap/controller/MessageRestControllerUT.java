@@ -2,17 +2,18 @@ package org.recap.controller;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.recap.BaseTestCase;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.util.PropertyUtil;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class MessageRestControllerUT extends BaseTestCase {
+@ExtendWith(MockitoExtension.class)
+public class MessageRestControllerUT {
 
     @Mock
     MessageRestController MessageRestController;
