@@ -2,13 +2,12 @@ package org.recap.controller.swagger;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.ScsbConstants;
@@ -32,8 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by hemalathas on 10/4/17.
  */
-@ExtendWith(MockitoExtension.class)
-public class PurgeRestControllerUT {
+public class PurgeRestControllerUT extends BaseTestCase{
 
 
     @InjectMocks

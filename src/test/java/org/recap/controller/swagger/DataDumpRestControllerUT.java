@@ -1,13 +1,15 @@
 package org.recap.controller.swagger;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.recap.*;
+import org.recap.BaseTestCase;
+import org.recap.PropertyKeyConstants;
+import org.recap.ScsbCommonConstants;
+import org.recap.ScsbConstants;
 import org.recap.spring.SwaggerAPIProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -28,8 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by hemalathas on 17/7/17.
  */
-@Ignore
-public class DataDumpRestControllerUT {
+public class DataDumpRestControllerUT extends BaseTestCase{
 
     @InjectMocks
     DataDumpRestController dataDumpRestController;
@@ -58,7 +59,7 @@ public class DataDumpRestControllerUT {
     String toDate = new Date().toString();
     String userName = "UT";
 
-    @Ignore
+    @Test
     public void testDataDumpRestController(){
         Map<String, String> inputMap = getInputMap();
         ResponseEntity responseEntity = new ResponseEntity(ScsbConstants.DATADUMP_PROCESS_STARTED, HttpStatus.OK);
@@ -69,13 +70,13 @@ public class DataDumpRestControllerUT {
         assertEquals("Export process has started and we will send an email notification upon completion",responseEntity1.getBody());
     }
 
-    @Ignore
+    @Test
     public void testDataDumpRestController_Exception(){
         ResponseEntity responseEntity1 = dataDumpRestController.exportDataDump(institutionCodes,requestingInstitutionCode,imsDepositoryCodes,fetchType,outputFormat,date,collectionGroupIds,transmissionType,emailToAddress,userName);
         assertEquals("Scsb Etl Service is Unavailable.",responseEntity1.getBody());
     }
 
-    @Ignore
+    @Test
     public void testexportDataDumpWithToDate(){
         Map<String,String> inputMap = getInputMap();
         inputMap.put("toDate",toDate);
@@ -88,7 +89,7 @@ public class DataDumpRestControllerUT {
     }
 
 
-    @Ignore
+    @Test
     public void testexportDataDumpWithToDate_Exception(){
         Map<String,String> inputMap = new HashMap<>();
         Mockito.when(restTemplate.exchange(scsbEtlUrl + "dataDump/exportDataDump?institutionCodes={institutionCodes}&requestingInstitutionCode={requestingInstitutionCode}&fetchType={fetchType}&outputFormat={outputFormat}&date={date}&toDate={toDate}&collectionGroupIds={collectionGroupIds}&transmissionType={transmissionType}&emailToAddress={emailToAddress}&userName={userName}", HttpMethod.GET, getHttpEntity(), String.class, inputMap)).thenReturn(null);

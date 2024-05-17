@@ -1,11 +1,12 @@
 package org.recap.controller.swagger;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.recap.BaseTestCase;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.ScsbConstants;
@@ -33,8 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by hemalathas on 3/2/17.
  */
-@Ignore
-public class SearchRecordsRestControllerUT {
+public class SearchRecordsRestControllerUT extends BaseTestCase{
 
     @Value("${" + PropertyKeyConstants.SCSB_SOLR_DOC_URL + "}")
     String scsbSolrClient;
@@ -66,7 +66,7 @@ public class SearchRecordsRestControllerUT {
         this.scsbSolrClient = scsbSolrClient;
     }
 
-    @Ignore
+    @Test
     public void testSearchRecordServiceGet(){
         HttpEntity request = new HttpEntity(restHeaderService.getHttpHeaders());
         List<SearchResultRow> searchResultRowList = new ArrayList<>();
@@ -86,7 +86,7 @@ public class SearchRecordsRestControllerUT {
 
     }
 
-   @Ignore
+   @Test
     public void testSearchRecordServiceGet_Exception(){
         HttpEntity request = new HttpEntity(restHeaderService.getHttpHeaders());
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(scsbSolrClient + ScsbConstants.URL_SEARCH_BY_PARAM)
@@ -131,7 +131,7 @@ public class SearchRecordsRestControllerUT {
         return searchRecordsResponse;
     }
 
-    @Ignore
+    @Test
     public void testSearchRecordwithParam(){
 
         ResponseEntity<SearchRecordsResponse> responseEntity = new ResponseEntity(getSearchRecordsResponse(), HttpStatus.OK);
@@ -142,7 +142,7 @@ public class SearchRecordsRestControllerUT {
 
     }
 
-    @Ignore
+    @Test
     public void testSearchRecordwithParam_Exception(){
         ResponseEntity responseEntity = new ResponseEntity(getSearchRecordsResponse(), HttpStatus.OK);
         HttpEntity requestEntity = getSwaggerHttpEntity();

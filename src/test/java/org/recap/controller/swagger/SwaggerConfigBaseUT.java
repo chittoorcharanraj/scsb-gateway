@@ -1,9 +1,8 @@
 package org.recap.controller.swagger;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 import org.recap.config.SwaggerConfig;
 
 
@@ -12,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author Charan Raj C created on 02/05/23
  */
-@ExtendWith(MockitoExtension.class)
-public class SwaggerConfigBaseUT{
+public class SwaggerConfigBaseUT extends BaseTestCase {
 
     @InjectMocks
     SwaggerConfig swaggerConfig;

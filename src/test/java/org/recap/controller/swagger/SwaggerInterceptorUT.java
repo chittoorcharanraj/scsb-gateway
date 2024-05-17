@@ -4,7 +4,8 @@ package org.recap.controller.swagger;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Test;
+import org.recap.BaseTestCase;
 import org.recap.config.SwaggerInterceptor;
 import org.recap.util.MD5EncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Created by hemalathas on 25/1/17.
  */
-@Ignore
-public class SwaggerInterceptorUT {
+public class SwaggerInterceptorUT extends BaseTestCase {
 
     @Autowired
     SwaggerInterceptor swaggerInterceptor;
@@ -32,14 +32,14 @@ public class SwaggerInterceptorUT {
 
     public static final String KEY = "api_key";
 
-    @Ignore
+    @Test
     public void testPreHandle() throws Exception {
         httpServletRequest.setAttribute("api_key", "scsb");
         boolean continueExport = swaggerInterceptor.preHandle(httpServletRequest, httpServletResponse, new Object());
         assertTrue(!continueExport);
     }
 
-    @Ignore
+    @Test
     public void testAuthentication() throws Exception {
         String randomString = RandomStringUtils.random(10, true, true);
         httpServletRequest.setAttribute(KEY, randomString);
@@ -47,39 +47,39 @@ public class SwaggerInterceptorUT {
         assertTrue(!continueExport);
     }
 
-    @Ignore
+    @Test
     public void testPostHandle() throws Exception {
         swaggerInterceptor.postHandle(httpServletRequest, httpServletResponse, new Object(), new ModelAndView());
     }
 
-    @Ignore
+    @Test
     public void testAfterCompletion() throws Exception {
         swaggerInterceptor.afterCompletion(httpServletRequest, httpServletResponse, new Object(), new Exception());
     }
 
-    @Ignore
+    @Test
     public void testgetMd5EncoderUtil() throws Exception {
         MD5EncoderUtil EncoderUtil = swaggerInterceptor.getMd5EncoderUtil();
         assertNotNull(EncoderUtil);
     }
 
-    @Ignore
+    @Test
     public void testgetScsbApiKey() throws Exception {
         String ScsbApiKey = swaggerInterceptor.getScsbApiKey();
         assertNotNull(ScsbApiKey);
     }
 
-    @Ignore
+    @Test
     public void testgetScsbapiKey() {
         String ScsbApiKey = swaggerInterceptor.getScsbApiKey();
     }
 
-    @Ignore
+    @Test
     public void getMd5EncoderUtiltest() {
         MD5EncoderUtil EncoderUtil = swaggerInterceptor.getMd5EncoderUtil();
     }
 
-    @Ignore
+    @Test
     public void matchingWithInstitutionKeysTest(){
         ReflectionTestUtils.invokeMethod(swaggerInterceptor, "matchingWithInstitutionKeys", "key");
     }

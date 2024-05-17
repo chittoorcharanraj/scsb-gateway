@@ -1,8 +1,7 @@
 package org.recap.model;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 import org.recap.ScsbCommonConstants;
 import org.recap.model.transfer.Destination;
 import org.recap.model.transfer.HoldingTransferResponse;
@@ -12,8 +11,7 @@ import org.recap.model.transfer.Source;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(MockitoExtension.class)
-public class HoldingTransferResponseUT{
+public class HoldingTransferResponseUT extends BaseTestCase {
 
     @Test
     public void holdingTransferResponse(){

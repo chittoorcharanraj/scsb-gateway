@@ -1,14 +1,11 @@
 package org.recap.controller.swagger;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.ScsbConstants;
@@ -52,8 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by chenchulakshmig on 14/10/16.
  */
-@ExtendWith(MockitoExtension.class)
-public class SharedCollectionRestControllerUT {
+public class SharedCollectionRestControllerUT extends BaseControllerUT {
 
     @Value("${" + PropertyKeyConstants.SCSB_SOLR_DOC_URL + "}")
     String scsbSolrClientUrl;
@@ -403,7 +399,7 @@ public class SharedCollectionRestControllerUT {
         assertEquals(HttpStatus.SERVICE_UNAVAILABLE,responseEntity.getStatusCode());
     }
 
-    @Ignore
+    @Test
     public void accession_Exception() throws Exception {
         List<AccessionRequest> accessionRequestList = new ArrayList<>();
         AccessionModelRequest accessionModelRequest=new AccessionModelRequest();
@@ -521,7 +517,7 @@ public class SharedCollectionRestControllerUT {
         assertEquals(HttpStatus.SERVICE_UNAVAILABLE,responseEntity1.getStatusCode());
     }
 
-    @Ignore
+    @Test
     public void checkGetterServices(){
         Mockito.when(sharedCollectionRestController.getRestTemplate()).thenCallRealMethod();
         Mockito.when(sharedCollectionRestController.getScsbSolrClientUrl()).thenCallRealMethod();
@@ -532,7 +528,7 @@ public class SharedCollectionRestControllerUT {
 
     }
 
-    @Ignore
+    @Test
     public void submitCollection_exception() throws Exception {
         mockRestTemplate.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));

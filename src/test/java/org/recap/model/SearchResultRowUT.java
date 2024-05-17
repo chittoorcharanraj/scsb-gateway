@@ -1,8 +1,7 @@
 package org.recap.model;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -12,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by hemalathas on 24/3/17.
  */
-@ExtendWith(MockitoExtension.class)
-public class SearchResultRowUT {
+public class SearchResultRowUT extends BaseTestCase{
 
     @Test
     public void testSearchResultRow(){

@@ -1,15 +1,12 @@
 package org.recap.controller;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.ScsbConstants;
@@ -32,8 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Created by rajeshbabuk on 20/4/17.
  */
-@Ignore
-public class ScheduleJobsControllerUT {
+public class ScheduleJobsControllerUT extends BaseControllerUT {
 
     @Value("${" + PropertyKeyConstants.SCSB_BATCH_SCHEDULE_URL + "}")
     String scsbScheduleUrl;
@@ -60,7 +56,7 @@ public class ScheduleJobsControllerUT {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Ignore
+    @Test
     public void testScheduleJob() {
         ScheduleJobRequest scheduleJobRequest = new ScheduleJobRequest();
         scheduleJobRequest.setJobName(ScsbCommonConstants.PURGE_EXCEPTION_REQUESTS);
@@ -78,7 +74,7 @@ public class ScheduleJobsControllerUT {
         assertNotNull(scheduleJobResponse1);
     }
 
-    @Ignore
+    @Test
     public void testScheduleJob_Exception() {
         ReflectionTestUtils.setField(scheduleJobsController,"scsbScheduleUrl",scsbScheduleUrl);
         HttpEntity requestEntity = getSwaggerHttpEntity();
@@ -93,7 +89,7 @@ public class ScheduleJobsControllerUT {
         assertNotNull(scheduleJobResponse1.getMessage());
     }
 
-    @Ignore
+    @Test
     public void testcustomLoggerTest() {
         ScheduleJobResponse scheduleJobResponse1 = scheduleJobsController.customLoggerTest();
         assertEquals("Scheduler job response",scheduleJobResponse1.getMessage());

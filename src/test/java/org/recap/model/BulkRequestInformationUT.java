@@ -1,16 +1,15 @@
 package org.recap.model;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Created by Anithav on 16/06/20.
  */
-@ExtendWith(MockitoExtension.class)
-public class BulkRequestInformationUT {
+
+public class BulkRequestInformationUT  extends BaseTestCase {
 
     @Test
     public void bulkRequestInformation() {

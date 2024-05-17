@@ -8,9 +8,8 @@ import org.apache.camel.ProducerTemplate;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.ScsbConstants;
@@ -42,8 +41,7 @@ import static org.mockito.Mockito.doThrow;
  * Created by hemalathas on 4/11/16.
  */
 @Slf4j
-@ExtendWith(MockitoExtension.class)
-public class RequestItemRestControllerUT {
+public class RequestItemRestControllerUT extends BaseTestCase {
 
 
     @InjectMocks
@@ -125,16 +123,11 @@ public class RequestItemRestControllerUT {
 
     @Test
     public void testValidRequest_RestClientException() {
-        try {
-            ItemRequestInformation itemRequestInformation = getValidItemRequestInformation(institutionCUL);
-            Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + "requestItem/validateItemRequestInformations", itemRequestInformation, String.class)).thenThrow(new RestClientException(""));
-            ResponseEntity responseEntity1 = requestItemRestController.validateItemRequest(itemRequestInformation);
-            assertNotNull(responseEntity1);
-            assertEquals("Scsb circ Service is Unavailable.", responseEntity1.getBody());
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        ItemRequestInformation itemRequestInformation = getValidItemRequestInformation(institutionCUL);
+        Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + "requestItem/validateItemRequestInformations", itemRequestInformation, String.class)).thenThrow(new RestClientException(""));
+        ResponseEntity responseEntity1 = requestItemRestController.validateItemRequest(itemRequestInformation);
+        assertNotNull(responseEntity1);
+        assertEquals("Scsb circ Service is Unavailable.", responseEntity1.getBody());
 
     }
 
@@ -193,7 +186,7 @@ public class RequestItemRestControllerUT {
         return itemRequestInformation;
     }
 
-    @Ignore
+    @Test
     public void testCancelRequest() {
         HttpEntity request = new HttpEntity<>(restHeaderService.getHttpHeaders());
         CancelRequestResponse cancelRequestResponse = new CancelRequestResponse();
@@ -837,7 +830,7 @@ public class RequestItemRestControllerUT {
         return itemCreateBibResponse;
     }
 
-    @Ignore
+    @Test
     public void testRequestItemTest() {
         ItemResponseInformation itemResponseInformation = null;
         ResponseEntity responseEntity = new ResponseEntity("Success", HttpStatus.OK);
@@ -857,7 +850,7 @@ public class RequestItemRestControllerUT {
         }
     }
 
-    @Ignore
+    @Test
     public void testRequestItemtest() {
         ItemResponseInformation itemResponseInformation = null;
         ResponseEntity responseEntity = new ResponseEntity("Success", HttpStatus.OK);
@@ -976,7 +969,7 @@ public class RequestItemRestControllerUT {
         }
     }
 
-    @Ignore
+    @Test
     public void testRequestSubmitItem_RestClientException() {
         ItemResponseInformation itemResponseInformation = null;
         try {

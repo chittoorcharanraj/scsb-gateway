@@ -3,12 +3,11 @@ package org.recap.controller;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.recap.BaseTestCase;
 import org.recap.model.request.RequestLogReportRequest;
 import org.recap.service.RequestItemService;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,8 @@ import static org.mockito.ArgumentMatchers.any;
 /**
  * @author Chittoor Charan Raj
  */
-@ExtendWith(MockitoExtension.class)
-public class RequestItemLogControllerUT{
+
+public class RequestItemLogControllerUT extends BaseTestCase {
 
     @InjectMocks
     RequestItemLogController requestItemLogController;
@@ -40,8 +39,7 @@ public class RequestItemLogControllerUT{
     @Test
     public void getRequestLogReportsTest() {
         RequestLogReportRequest requestLogReportRequest = getRequestLogReportRequest();
-//        Mockito.when(requestItemService.submitRequests(any())).thenReturn(requestLogReportRequest);
-        Mockito.lenient().when(requestItemService.submitRequests(any())).thenReturn(requestLogReportRequest);
+        Mockito.when(requestItemService.submitRequests(any())).thenReturn(requestLogReportRequest);
         ResponseEntity<RequestLogReportRequest> requestLogReports = requestItemLogController.getRequestLogReports(requestLogReportRequest);
         assertNotNull(requestLogReports);
     }

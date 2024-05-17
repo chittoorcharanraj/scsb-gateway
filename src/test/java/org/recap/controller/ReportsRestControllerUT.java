@@ -2,13 +2,11 @@ package org.recap.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.recap.PropertyKeyConstants;
 import org.recap.ScsbCommonConstants;
 import org.recap.model.reports.ReportsRequest;
@@ -33,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * Created by rajeshbabuk on 13/1/17.
  */
-@ExtendWith(MockitoExtension.class)
-public class ReportsRestControllerUT {
+
+public class ReportsRestControllerUT extends BaseControllerUT {
 
     @Value("${" + PropertyKeyConstants.SCSB_SOLR_DOC_URL + "}")
     String scsbSolrClientUrl;
