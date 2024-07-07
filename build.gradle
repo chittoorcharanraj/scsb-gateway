@@ -48,15 +48,15 @@ dependencies {
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
 	implementation('org.codehaus.jettison:jettison:1.5.4')
 	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
-	implementation('org.apache.camel:camel-api:4.4.2')
-	implementation('org.apache.camel:camel-bindy:4.4.2')
-	implementation('org.apache.camel.springboot:camel-spring-boot-starter:4.4.2')
-	implementation('org.apache.camel:camel-activemq:4.4.2')
-	implementation 'org.apache.camel:camel-jms:4.4.2'
-	implementation('org.apache.camel:camel-ftp:4.4.2')
-	implementation('org.apache.camel:camel-csv:4.4.2')
+	implementation('org.apache.camel:camel-api:4.4.3')
+	implementation('org.apache.camel:camel-bindy:4.4.3')
+	implementation('org.apache.camel.springboot:camel-spring-boot-starter:4.4.3')
+	implementation('org.apache.camel:camel-activemq:4.4.3')
+	implementation 'org.apache.camel:camel-jms:4.4.3'
+	implementation('org.apache.camel:camel-ftp:4.4.3')
+	implementation('org.apache.camel:camel-csv:4.4.3')
 	implementation('info.freelibrary:freelib-marc4j:2.6.12')
-	testImplementation 'org.apache.camel:camel-jetty:4.4.2'
+	testImplementation 'org.apache.camel:camel-jetty:4.4.3'
 	implementation('org.apache.solr:solr-solrj:9.6.1')
 	implementation('org.apache.activemq:activemq-camel:5.16.7')
 	implementation('org.apache.activemq:activemq-pool:6.1.2')
@@ -85,7 +85,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.11'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
 }
@@ -93,7 +93,7 @@ dependencies {
 configurations.all {
 	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
 		if (details.requested.group == 'org.apache.logging.log4j') {
-			details.useVersion '3.0.0-alpha1'
+			details.useVersion '3.0.0-beta2'
 		}
 	}
 }
