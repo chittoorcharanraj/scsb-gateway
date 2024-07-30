@@ -14,6 +14,6 @@ import org.springframework.util.Assert;
 public class BaseTestCaseUT {
     @Test
     public void loadContexts() {
-        Assert.isTrue(true);
+        Assert.isTrue(true, "test");
     }
 }
