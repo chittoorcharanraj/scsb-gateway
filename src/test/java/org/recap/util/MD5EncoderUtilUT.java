@@ -15,13 +15,13 @@ public class MD5EncoderUtilUT {
     private MD5EncoderUtil mD5EncoderUtil;
 
     @Test
-    public void testGetMD5EncodingString() throws NoSuchAlgorithmException {
-        mD5EncoderUtil.getMD5EncodingString("27c7cf400229103e00c6d8830029e29b");
+    public void getMD5EncodingStringtTest() throws NoSuchAlgorithmException {
+        mD5EncoderUtil.getMD5EncodingString("test");
     }
 
 
     @Test
-    public void testMatching() {
-        mD5EncoderUtil.matching("27c7cf400229103e00c6d8830029e29b", "27c7cf400229103e00c6d8830029e29b");
+    public void matchingTest() {
+        mD5EncoderUtil.matching("orig", "compare");
     }
 }
