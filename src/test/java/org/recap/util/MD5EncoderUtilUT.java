@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+
 @ContextConfiguration(classes = {MD5EncoderUtil.class})
 @ExtendWith(SpringExtension.class)
 public class MD5EncoderUtilUT {
@@ -19,9 +22,10 @@ public class MD5EncoderUtilUT {
         mD5EncoderUtil.getMD5EncodingString("test");
     }
 
-
     @Test
     public void matchingTest() {
-        mD5EncoderUtil.matching("orig", "compare");
+        boolean result = mD5EncoderUtil.matching("orig", "compare");
+        assertFalse(result, "The MD5 hashes should match");
     }
+
 }
