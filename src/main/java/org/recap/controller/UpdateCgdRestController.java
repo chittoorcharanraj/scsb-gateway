@@ -38,7 +38,7 @@ public class UpdateCgdRestController extends AbstractController {
         try {
             HttpEntity requestEntity = new HttpEntity<>(getRestHeaderService().getHttpHeaders());
 
-            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getScsbSolrClientUrl() + ScsbConstants.URL_UPDATE_CGD)
+            UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(getScsbSolrClientUrl() + ScsbConstants.URL_UPDATE_CGD)
                     .queryParam(ScsbCommonConstants.CGD_UPDATE_ITEM_BARCODE, itemBarcode)
                     .queryParam(ScsbConstants.OWNING_INSTITUTION, owningInstitution)
                     .queryParam(ScsbCommonConstants.OLD_CGD, oldCollectionGroupDesignation)
