@@ -1,5 +1,6 @@
 package org.recap.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -38,6 +39,11 @@ public class RequestItemServiceUT extends BaseTestCase {
 
     @Mock
     RequestItemRestController controller;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
 
     @Test

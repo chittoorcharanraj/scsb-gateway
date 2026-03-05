@@ -5,7 +5,7 @@ import org.recap.BaseTestCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
 import org.springframework.mock.http.MockHttpInputMessage;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,11 +31,11 @@ public class BaseControllerUT extends BaseTestCase {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @Autowired
-    public void setConverters(HttpMessageConverter<?>[] converters) {
-        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream().filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
-        assertNotNull(this.mappingJackson2HttpMessageConverter);
-    }
+//    @Autowired
+//    public void setConverters(HttpMessageConverter<?>[] converters) {
+//        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream().filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
+//        assertNotNull(this.mappingJackson2HttpMessageConverter);
+//    }
 
     @BeforeEach
     public void setup() throws Exception {

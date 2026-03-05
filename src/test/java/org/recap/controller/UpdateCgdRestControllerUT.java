@@ -66,7 +66,7 @@ public class UpdateCgdRestControllerUT extends BaseControllerUT {
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(ScsbCommonConstants.SUCCESS,HttpStatus.OK);
         updateCgdRestController.setScsbSolrClientUrl(getScsbSolrClientUrl());
         HttpEntity requestEntity = new HttpEntity<>(restHeaderService.getHttpHeaders());
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(scsbSolrClient + ScsbConstants.URL_UPDATE_CGD)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(scsbSolrClient + ScsbConstants.URL_UPDATE_CGD)
                 .queryParam(ScsbCommonConstants.CGD_UPDATE_ITEM_BARCODE, itemBarcode)
                 .queryParam(ScsbConstants.OWNING_INSTITUTION, owningInstitution)
                 .queryParam(ScsbCommonConstants.OLD_CGD, oldCollectionGroupDesignation)
@@ -83,7 +83,7 @@ public class UpdateCgdRestControllerUT extends BaseControllerUT {
     public void updateCgdForItem_Exception() {
         updateCgdRestController.setScsbSolrClientUrl(getScsbSolrClientUrl());
         HttpEntity requestEntity = new HttpEntity<>(restHeaderService.getHttpHeaders());
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(scsbSolrClient + ScsbConstants.URL_UPDATE_CGD)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(scsbSolrClient + ScsbConstants.URL_UPDATE_CGD)
                 .queryParam(ScsbCommonConstants.CGD_UPDATE_ITEM_BARCODE, itemBarcode)
                 .queryParam(ScsbCommonConstants.OWNING_INSTITUTION, owningInstitution)
                 .queryParam(ScsbCommonConstants.OLD_CGD, oldCollectionGroupDesignation)

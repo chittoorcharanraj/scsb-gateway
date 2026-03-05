@@ -193,7 +193,7 @@ public class RequestItemRestControllerUT extends BaseTestCase {
         cancelRequestResponse.setScreenMessage("Request cancelled.");
         cancelRequestResponse.setSuccess(true);
         ResponseEntity<CancelRequestResponse> responseEntity = new ResponseEntity<CancelRequestResponse>(cancelRequestResponse, HttpStatus.OK);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getScsbCircUrl() + ScsbConstants.URL_REQUEST_CANCEL).queryParam("requestId", 129);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(getScsbCircUrl() + ScsbConstants.URL_REQUEST_CANCEL).queryParam("requestId", 129);
         Mockito.when(mockRestTemplate.exchange(builder.build().encode().toUri(), org.springframework.http.HttpMethod.POST, request, CancelRequestResponse.class)).thenReturn(responseEntity);
         cancelRequestResponse = requestItemRestController.cancelRequest(129);
         assertNotNull(cancelRequestResponse);

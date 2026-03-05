@@ -1,7 +1,6 @@
 package org.recap.controller;
 
-
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,7 +29,7 @@ public class RequestItemLogControllerUT extends BaseTestCase {
     @Mock
     RequestItemService requestItemService;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(requestItemLogController, "requestItemService", requestItemService);
