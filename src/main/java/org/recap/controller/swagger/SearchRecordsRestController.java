@@ -90,7 +90,7 @@ public class SearchRecordsRestController extends AbstractController {
         List<SearchResultRow> searchResultRows = null;
         try {
 
-            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getScsbSolrClientUrl() + ScsbConstants.URL_SEARCH_BY_PARAM)
+            UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(getScsbSolrClientUrl() + ScsbConstants.URL_SEARCH_BY_PARAM)
                     .queryParam("fieldValue", fieldValue)
                     .queryParam("fieldName", fieldName)
                     .queryParam("owningInstitutions", owningInstitutions)

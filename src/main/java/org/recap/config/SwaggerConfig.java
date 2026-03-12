@@ -6,7 +6,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
  * @author Sheik Sahib on 5/28/20
  */
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class SwaggerConfig extends SwaggerConfigBase {
 
     public static final String SCHEME_NAME = "apiKey";
@@ -43,7 +43,7 @@ public class SwaggerConfig extends SwaggerConfigBase {
         return GroupedOpenApi.builder()
                 .group("springshop-admin")
                 .pathsToMatch("*")
-                .packagesToScan("org.recap.controller.swagger")
+                .packagesToScan("org.recap.controller")
                 .build();
     }
 

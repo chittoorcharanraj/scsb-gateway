@@ -1,9 +1,11 @@
 package org.recap.controller;
 
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.recap.BaseTestCase;
 import org.recap.util.PropertyUtil;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -19,6 +21,11 @@ public class MessageRestControllerUT extends BaseTestCase {
 
     @Mock
     PropertyUtil propertyUtil;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void getValue() throws Exception {

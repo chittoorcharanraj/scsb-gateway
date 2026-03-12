@@ -551,7 +551,7 @@ public class RequestItemRestController extends AbstractController  {
     public CancelRequestResponse cancelRequest(@Parameter(description = "Parameters for canceling a request on the Item", required = true, name = "requestId") @RequestParam Integer requestId) {
         CancelRequestResponse cancelRequestResponse;
         HttpEntity request = new HttpEntity<>(getRestHeaderService().getHttpHeaders());
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getScsbCircUrl() + ScsbConstants.URL_REQUEST_CANCEL).queryParam("requestId", requestId);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(getScsbCircUrl() + ScsbConstants.URL_REQUEST_CANCEL).queryParam("requestId", requestId);
         HttpEntity<CancelRequestResponse> responseEntity = restTemplate.exchange(builder.build().encode().toUri(), HttpMethod.POST, request, CancelRequestResponse.class);
         cancelRequestResponse = responseEntity.getBody();
         return cancelRequestResponse;

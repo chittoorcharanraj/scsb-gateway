@@ -71,7 +71,7 @@ public class SearchRecordsRestControllerUT extends BaseTestCase{
         HttpEntity request = new HttpEntity(restHeaderService.getHttpHeaders());
         List<SearchResultRow> searchResultRowList = new ArrayList<>();
         ResponseEntity<List> httpEntity = new ResponseEntity<List>(searchResultRowList,HttpStatus.OK);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(scsbSolrClient + ScsbConstants.URL_SEARCH_BY_PARAM)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(scsbSolrClient + ScsbConstants.URL_SEARCH_BY_PARAM)
                 .queryParam("fieldValue", "test")
                 .queryParam("fieldName", "test")
                 .queryParam("owningInstitutions", "PUL")
@@ -89,7 +89,7 @@ public class SearchRecordsRestControllerUT extends BaseTestCase{
    @Test
     public void testSearchRecordServiceGet_Exception(){
         HttpEntity request = new HttpEntity(restHeaderService.getHttpHeaders());
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(scsbSolrClient + ScsbConstants.URL_SEARCH_BY_PARAM)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(scsbSolrClient + ScsbConstants.URL_SEARCH_BY_PARAM)
                 .queryParam("fieldValue", "test")
                 .queryParam("fieldName", "test")
                 .queryParam("owningInstitutions", "PUL")
