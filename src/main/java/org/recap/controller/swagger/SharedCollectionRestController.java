@@ -24,6 +24,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
@@ -72,7 +73,14 @@ public class SharedCollectionRestController extends AbstractController {
     public ResponseEntity itemAvailabilityStatus(@Parameter(description = "Item Barcodes with ',' separated", required = true, name = "itemBarcodes") @RequestBody ItemAvailabityStatusRequest itemAvailabityStatus) {
         String response;
         try {
+            if (itemAvailabityStatus == null || itemAvailabityStatus.getBarcodes() == null
+                    || itemAvailabityStatus.getBarcodes().isEmpty()) {
+                return new ResponseEntity<>(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, getHttpHeaders(), HttpStatus.BAD_REQUEST);
+            }
             response = getRestTemplate().postForObject(getScsbSolrClientUrl() + "/sharedCollection/itemAvailabilityStatus", itemAvailabityStatus, String.class);
+        } catch (HttpServerErrorException httpServerErrorException) {
+            log.error(ScsbCommonConstants.LOG_ERROR, httpServerErrorException);
+            return new ResponseEntity<>(httpServerErrorException.getResponseBodyAsString(), getHttpHeaders(), httpServerErrorException.getStatusCode());
         } catch (RuntimeException exception) {
             log.error(ScsbCommonConstants.LOG_ERROR, exception);
             return new ResponseEntity<>(ScsbCommonConstants.SCSB_SOLR_CLIENT_SERVICE_UNAVAILABLE, getHttpHeaders(), HttpStatus.SERVICE_UNAVAILABLE);
