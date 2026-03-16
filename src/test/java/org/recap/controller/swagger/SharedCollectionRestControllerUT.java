@@ -29,18 +29,13 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -239,9 +234,113 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     @Test
     public void itemAvailabilityStatus_Exception() throws Exception {
         ItemAvailabityStatusRequest itemAvailabityStatus = new ItemAvailabityStatusRequest();
+        itemAvailabityStatus.setBarcodes(Arrays.asList("12345"));
+
+        Mockito.when(sharedCollectionRestController.getRestTemplate()).thenReturn(mockRestTemplate);
+        Mockito.when(sharedCollectionRestController.getScsbSolrClientUrl()).thenReturn("http://mock-url");
+        Mockito.when(mockRestTemplate.postForObject(
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.any(),
+                ArgumentMatchers.eq(String.class)
+        )).thenThrow(new RuntimeException("Service unavailable"));
+
         Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(itemAvailabityStatus)).thenCallRealMethod();
+
         ResponseEntity responseEntity1 = sharedCollectionRestController.itemAvailabilityStatus(itemAvailabityStatus);
-        assertEquals(ScsbCommonConstants.SCSB_SOLR_CLIENT_SERVICE_UNAVAILABLE,responseEntity1.getBody());
+        assertEquals(ScsbCommonConstants.SCSB_SOLR_CLIENT_SERVICE_UNAVAILABLE, responseEntity1.getBody());
+    }
+
+    @Test
+    public void testTC1_nullRequest() {
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(null)).thenCallRealMethod();
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(null);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, response.getBody());
+    }
+
+    @Test
+    public void testTC2_nullBarcodes() {
+        ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
+        request.setBarcodes(null);
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, response.getBody());
+    }
+
+    @Test
+    public void testTC3_emptyBarcodes() {
+        ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
+        request.setBarcodes(Collections.emptyList());
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, response.getBody());
+    }
+
+    @Test
+    public void testTC4_httpServerErrorException() {
+        ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
+        request.setBarcodes(Arrays.asList("12345"));
+        HttpServerErrorException ex = new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
+
+        Mockito.when(sharedCollectionRestController.getRestTemplate()).thenReturn(mockRestTemplate);
+        Mockito.when(sharedCollectionRestController.getScsbSolrClientUrl()).thenReturn("http://mock-url");
+        Mockito.when(mockRestTemplate.postForObject(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.eq(String.class)))
+                .thenThrow(ex);
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
+
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(request);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    public void testTC5_emptyResponse() {
+        ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
+        request.setBarcodes(Arrays.asList("12345"));
+
+        Mockito.when(sharedCollectionRestController.getRestTemplate()).thenReturn(mockRestTemplate);
+        Mockito.when(sharedCollectionRestController.getScsbSolrClientUrl()).thenReturn("http://mock-url");
+        Mockito.when(mockRestTemplate.postForObject(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.eq(String.class)))
+                .thenReturn("");
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
+
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, response.getBody());
+    }
+
+    @Test
+    public void testTC6_validResponse() {
+        ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
+        request.setBarcodes(Arrays.asList("12345"));
+        String mockResponse = "[{\"itemBarcode\":\"12345\",\"itemAvailabilityStatus\":\"Available\"}]";
+
+        Mockito.when(sharedCollectionRestController.getRestTemplate()).thenReturn(mockRestTemplate);
+        Mockito.when(sharedCollectionRestController.getScsbSolrClientUrl()).thenReturn("http://mock-url");
+        Mockito.when(mockRestTemplate.postForObject(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.eq(String.class)))
+                .thenReturn(mockResponse);
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
+
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(request);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(mockResponse, response.getBody());
+    }
+
+    @Test
+    public void testTC7_runtimeException() {
+        ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
+        request.setBarcodes(Arrays.asList("12345"));
+
+        Mockito.when(sharedCollectionRestController.getRestTemplate()).thenReturn(mockRestTemplate);
+        Mockito.when(sharedCollectionRestController.getScsbSolrClientUrl()).thenReturn("http://mock-url");
+        Mockito.when(mockRestTemplate.postForObject(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.eq(String.class)))
+                .thenThrow(new RuntimeException("Connection refused"));
+        Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
+
+        ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(request);
+        assertEquals(HttpStatus.SERVICE_UNAVAILABLE, response.getStatusCode());
+        assertEquals(ScsbCommonConstants.SCSB_SOLR_CLIENT_SERVICE_UNAVAILABLE, response.getBody());
     }
 
     @Test
