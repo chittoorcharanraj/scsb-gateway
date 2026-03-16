@@ -251,7 +251,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC1_nullRequest() {
+    public void itemAvailabilityStatusNullRequest() {
         Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(null)).thenCallRealMethod();
         ResponseEntity response = sharedCollectionRestController.itemAvailabilityStatus(null);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -259,7 +259,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC2_nullBarcodes() {
+    public void itemAvailabilityStatusNullBarcodes() {
         ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
         request.setBarcodes(null);
         Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
@@ -269,7 +269,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC3_emptyBarcodes() {
+    public void itemAvailabilityStatusEmptyBarcodes() {
         ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
         request.setBarcodes(Collections.emptyList());
         Mockito.when(sharedCollectionRestController.itemAvailabilityStatus(request)).thenCallRealMethod();
@@ -279,7 +279,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC4_httpServerErrorException() {
+    public void testHttpServerErrorException() {
         ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
         request.setBarcodes(Arrays.asList("12345"));
         HttpServerErrorException ex = new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
@@ -295,7 +295,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC5_emptyResponse() {
+    public void itemAvailabilityStatusEmptyResponse() {
         ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
         request.setBarcodes(Arrays.asList("12345"));
 
@@ -311,7 +311,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC6_validResponse() {
+    public void itemAvailabilityStatusValidResponse() {
         ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
         request.setBarcodes(Arrays.asList("12345"));
         String mockResponse = "[{\"itemBarcode\":\"12345\",\"itemAvailabilityStatus\":\"Available\"}]";
@@ -328,7 +328,7 @@ public class SharedCollectionRestControllerUT extends BaseControllerUT {
     }
 
     @Test
-    public void testTC7_runtimeException() {
+    public void itemAvailabilityStatusRuntimeException() {
         ItemAvailabityStatusRequest request = new ItemAvailabityStatusRequest();
         request.setBarcodes(Arrays.asList("12345"));
 
