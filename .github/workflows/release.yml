@@ -1,0 +1,41 @@
+name: Auto Tag Components
+
+on:
+  push:
+    branches:
+      - v6-dev
+
+jobs:
+  tag-components:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create and Push Tags
+        run: |
+          set -e
+          TAG_NAME="2026.0.0"
+          
+          # List your component repository slugs here
+          REPOS=("chittoorcharanraj/scsb-gateway" "chittoorcharanraj/scsb-auth")
+
+          for REPO in "${REPOS[@]}"; do
+            echo "Processing $REPO..."
+            
+            # 1. Check if tag exists on that specific remote repo
+            EXISTS=$(git ls-remote --tags https://github.com refs/tags/$TAG_NAME)
+            
+            if [ -n "$EXISTS" ]; then
+              echo "Tag $TAG_NAME already exists in $REPO. Skipping."
+              continue
+            fi
+
+            # 2. Push tag using the PAT for authentication
+            # We use the PAT to construct a remote URL with permissions
+            git push https://x-access-token:${{ secrets.MY_GH_PAT }}@://github.com v6-dev:refs/tags/$TAG_NAME
+            
+            echo "Successfully created tag $TAG_NAME in $REPO"
+          done
