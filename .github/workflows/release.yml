@@ -1,0 +1,55 @@
+name: Auto Tag Components
+
+on:
+  push:
+    branches:
+      - v6-dev
+
+jobs:
+  tag-components:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create and Push Tags
+        run: |
+          set -e
+          
+          # Components to be tagged
+          COMPONENTS=("scsb-gateway" "scsb-auth")
+          TAG_VERSION="2026.0.0"
+          BRANCH="${GITHUB_REF_NAME}"
+          AUTHOR="${GITHUB_ACTOR}"
+          
+          for COMPONENT in "${COMPONENTS[@]}"; do
+            TAG_NAME="${COMPONENT}-${TAG_VERSION}"
+            
+            # Check if this specific component tag already exists
+            if git ls-remote --tags origin | grep -q "refs/tags/${TAG_NAME}"; then
+              echo "Tag ${TAG_NAME} already exists. Skipping..."
+              continue
+            fi
+
+            echo "Creating tag: ${TAG_NAME}"
+            
+            # Create the tag with dynamic author and branch info
+            git tag -a "${TAG_NAME}" -m "Release for ${COMPONENT}. Author: ${AUTHOR}, Branch: ${BRANCH}"
+            
+            # Push the specific tag
+            git push origin "${TAG_NAME}"
+            
+            echo "Successfully pushed: ${TAG_NAME}"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
