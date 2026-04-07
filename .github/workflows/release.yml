@@ -1,0 +1,48 @@
+name: Auto Tag Components
+
+on:
+  push:
+    branches:
+      - v6-dev
+
+jobs:
+  tag-components:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create and Push Unified Tag
+        run: |
+          set -e
+          
+          # Dynamic Metadata
+          TAG_VERSION="2026.0.0"
+          BRANCH="${GITHUB_REF_NAME}"
+          AUTHOR="${GITHUB_ACTOR}"
+          
+          # Check if tag already exists to prevent failures
+          if git ls-remote --tags origin | grep -q "refs/tags/${TAG_VERSION}"; then
+            echo "Tag ${TAG_VERSION} already exists. Skipping."
+            exit 0
+          fi
+
+          echo "Tagging scsb-gateway and scsb-auth at version ${TAG_VERSION}"
+          
+          # Create one annotated tag with author and branch info
+          git tag -a "${TAG_VERSION}" -m "Release for scsb-gateway and scsb-auth. Author: ${AUTHOR}, Branch: ${BRANCH}"
+          
+          # Push the tag to GitHub
+          git push origin "${TAG_VERSION}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
