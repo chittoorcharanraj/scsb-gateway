@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ConsumerTemplate;
 import org.apache.camel.ProducerTemplate;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -277,7 +276,6 @@ public class RequestItemRestControllerUT extends BaseTestCase {
         Mockito.when(mockRequestItemRestController.getScsbCircUrl()).thenReturn(scsbCircUrl);
         Mockito.when(mockRequestItemRestController.getItemRequestInformation()).thenReturn(getItemRequestInformation("45678915", "123", institutionPUL));
         Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + "requestItem/checkinItem", getItemRequestInformation("45678915", "123", institutionPUL), String.class)).thenThrow(new RestClientException("Exception occured"));
-        ;
         Mockito.when(mockRequestItemRestController.checkinItemRequest(itemCheckInRequest)).thenCallRealMethod();
         Mockito.when(mockRequestItemRestController.getLogger()).thenReturn(log);
         AbstractResponseItem abstractResponseItem = mockRequestItemRestController.checkinItemRequest(itemCheckInRequest);
@@ -835,8 +833,8 @@ public class RequestItemRestControllerUT extends BaseTestCase {
         ItemResponseInformation itemResponseInformation = null;
         ResponseEntity responseEntity = new ResponseEntity("Success", HttpStatus.OK);
         try {
-            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(), any(),Boolean.TRUE);
-            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(), any(),Boolean.FALSE);
+            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(), any(), Boolean.TRUE);
+            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(), any(), Boolean.FALSE);
             Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_VALIDATE_ITEM_REQUEST, getItemRequestInformation(), String.class)).thenReturn(responseEntity);
             itemResponseInformation = requestItemRestController.itemRequest(getItemRequestInformation());
             assertNotNull(itemResponseInformation);
@@ -855,8 +853,8 @@ public class RequestItemRestControllerUT extends BaseTestCase {
         ItemResponseInformation itemResponseInformation = null;
         ResponseEntity responseEntity = new ResponseEntity("Success", HttpStatus.OK);
         try {
-            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(ItemRequestInformation.class),any(String.class), Boolean.TRUE);
-            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(ItemRequestInformation.class),any(String.class), Boolean.FALSE);
+            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(ItemRequestInformation.class), any(String.class), Boolean.TRUE);
+            doThrow(new Exception()).when(service).saveReceivedRequestInformation(any(ItemRequestInformation.class), any(String.class), Boolean.FALSE);
             Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_VALIDATE_ITEM_REQUEST, getItemRequestInformation(), String.class)).thenThrow(new Exception("Exception occured"));
             itemResponseInformation = requestItemRestController.itemRequest(getItemRequestInformation());
             assertNotNull(itemResponseInformation);
@@ -892,7 +890,7 @@ public class RequestItemRestControllerUT extends BaseTestCase {
         ResponseEntity responseEntity = new ResponseEntity("Success", HttpStatus.OK);
         try {
             Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_VALIDATE_ITEM_REQUEST, getItemRequestInformation(), String.class)).thenReturn(responseEntity);
-            itemResponseInformation = requestItemRestController.itemSubmitRequest(getItemRequestInformation(),1);
+            itemResponseInformation = requestItemRestController.itemSubmitRequest(getItemRequestInformation(), 1);
             assertNotNull(itemResponseInformation);
             assertTrue(itemResponseInformation.isSuccess());
             assertEquals("Message received, your request will be processed", itemResponseInformation.getScreenMessage());
@@ -930,7 +928,7 @@ public class RequestItemRestControllerUT extends BaseTestCase {
             doThrow(new Exception("Error occurred")).when(service)
                     .updateItemRequest(anyString(), anyInt());
             Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_VALIDATE_ITEM_REQUEST, getItemRequestInformation(), String.class)).thenThrow(new Exception("Exception occured"));
-            itemResponseInformation = requestItemRestController.itemSubmitRequest(getItemRequestInformation(),1);
+            itemResponseInformation = requestItemRestController.itemSubmitRequest(getItemRequestInformation(), 1);
             assertNotNull(itemResponseInformation);
             assertTrue(itemResponseInformation.isSuccess());
             assertEquals("Message received, your request will be processed", itemResponseInformation.getScreenMessage());
@@ -949,7 +947,7 @@ public class RequestItemRestControllerUT extends BaseTestCase {
         try {
             ReflectionTestUtils.setField(requestItemRestController, "producer", null);
             Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_VALIDATE_ITEM_REQUEST, getItemRequestInformation(), String.class)).thenReturn(responseEntity);
-            itemResponseInformation = requestItemRestController.itemSubmitRequest(getItemRequestInformation(),1);
+            itemResponseInformation = requestItemRestController.itemSubmitRequest(getItemRequestInformation(), 1);
             assertNotNull(itemResponseInformation);
         } catch (Exception e) {
             e.printStackTrace();
@@ -976,7 +974,7 @@ public class RequestItemRestControllerUT extends BaseTestCase {
             Mockito.when(mockRestTemplate.postForEntity(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_VALIDATE_ITEM_REQUEST, null, null)).thenThrow(new RestClientException("Exception Occurred"));
             itemResponseInformation = requestItemRestController.itemSubmitRequest(null, 1);
             assertNotNull(itemResponseInformation);
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -984,5 +982,4 @@ public class RequestItemRestControllerUT extends BaseTestCase {
     }
 
 
-
-    }
+}

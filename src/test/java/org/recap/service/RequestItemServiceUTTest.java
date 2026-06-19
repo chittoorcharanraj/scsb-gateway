@@ -1,6 +1,6 @@
 package org.recap.service;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -45,7 +45,7 @@ public class RequestItemServiceUTTest extends BaseTestCaseUT {
     @Mock
     RequestItemRestController requestItemRestController;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(requestItemService, "itemRequestInformationRepository", itemRequestInformationRepository);
@@ -53,21 +53,22 @@ public class RequestItemServiceUTTest extends BaseTestCaseUT {
     }
 
     @Test
-    public void testSubmitRequest(){
+    public void testSubmitRequest() {
         Optional<ItemRequestReceivedInformationEntity> itemRequestReceivedInformationEntity = getItemRequestReceivedInformationEntity();
         Mockito.when(itemRequestInformationRepository.findById(Mockito.any(Integer.class))).thenReturn(itemRequestReceivedInformationEntity);
         requestItemService.submitRequests(getRequestLogReportRequest());
     }
 
     @Test
-    public void restClientExceptionTest(){
+    public void restClientExceptionTest() {
         Optional<ItemRequestReceivedInformationEntity> itemRequestReceivedInformationEntity = getItemRequestReceivedInformationEntity();
         Mockito.when(itemRequestInformationRepository.findById(Mockito.any(Integer.class))).thenReturn(itemRequestReceivedInformationEntity);
         doThrow(RestClientException.class).when(requestItemRestController).itemSubmitRequest(any(), anyInt());
         requestItemService.submitRequests(getRequestLogReportRequest());
     }
+
     @Test
-    public void testSubmitRequestException(){
+    public void testSubmitRequestException() {
         Optional<ItemRequestReceivedInformationEntity> itemRequestReceivedInformationEntity = getItemRequestReceivedInformationEntity();
         Mockito.when(itemRequestInformationRepository.findById(Mockito.any(Integer.class))).thenReturn(itemRequestReceivedInformationEntity);
         doThrow(HttpClientErrorException.class).when(requestItemRestController).itemSubmitRequest(any(), anyInt());
@@ -85,6 +86,7 @@ public class RequestItemServiceUTTest extends BaseTestCaseUT {
         requestLogReportRequest.setGatewayRequestLogId(1);
         return requestLogReportRequest;
     }
+
     private Optional<ItemRequestReceivedInformationEntity> getItemRequestReceivedInformationEntity() {
         ItemRequestReceivedInformationEntity itemRequestReceivedInformationEntity = new ItemRequestReceivedInformationEntity();
         itemRequestReceivedInformationEntity.setRequestInstitution("TEST");
@@ -98,12 +100,13 @@ public class RequestItemServiceUTTest extends BaseTestCaseUT {
     }
 
     @Test
-    public void testSubmitRequestWithZeroId(){
+    public void testSubmitRequestWithZeroId() {
         List<ItemRequestReceivedInformationEntity> list = getItemRequestReceivedInformationEntityList();
         Page<ItemRequestReceivedInformationEntity> pageResponse = new PageImpl<>(list);
-        Mockito.when(itemRequestInformationRepository.findAllByStatusId(Mockito.any(Pageable.class),Mockito.any(Integer.class))).thenReturn(pageResponse);
+        Mockito.when(itemRequestInformationRepository.findAllByStatusId(Mockito.any(Pageable.class), Mockito.any(Integer.class))).thenReturn(pageResponse);
         requestItemService.submitRequests(getRequestLogReportRequestNoBody());
     }
+
     public RequestLogReportRequest getRequestLogReportRequestNoBody() {
         RequestLogReportRequest requestLogReportRequest = new RequestLogReportRequest();
         requestLogReportRequest.setGatewayRequestLogId(0);
@@ -111,6 +114,7 @@ public class RequestItemServiceUTTest extends BaseTestCaseUT {
         requestLogReportRequest.setPageSize(1);
         return requestLogReportRequest;
     }
+
     private List<ItemRequestReceivedInformationEntity> getItemRequestReceivedInformationEntityList() {
         List<ItemRequestReceivedInformationEntity> list = new ArrayList<>();
         ItemRequestReceivedInformationEntity itemRequestReceivedInformationEntity = new ItemRequestReceivedInformationEntity();
