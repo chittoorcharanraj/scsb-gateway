@@ -13,9 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
@@ -31,11 +29,6 @@ public class BaseControllerUT extends BaseTestCase {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-//    @Autowired
-//    public void setConverters(HttpMessageConverter<?>[] converters) {
-//        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream().filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter).findAny().get();
-//        assertNotNull(this.mappingJackson2HttpMessageConverter);
-//    }
 
     @BeforeEach
     public void setup() throws Exception {
