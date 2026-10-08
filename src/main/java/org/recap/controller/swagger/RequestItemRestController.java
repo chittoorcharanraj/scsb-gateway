@@ -38,6 +38,7 @@ import org.recap.model.ItemResponseInformation;
 import org.recap.model.PatronInformationRequest;
 import org.recap.model.PatronInformationResponse;
 import org.recap.model.ReplaceRequest;
+import org.recap.model.RequestStatusRequest;
 import org.recap.service.RequestItemService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -703,6 +705,42 @@ public class RequestItemRestController extends AbstractController  {
             log.error(ScsbCommonConstants.REQUEST_EXCEPTION, e);
         }
         return itemResponseInformation;
+    }
+
+    /**
+     * This method will call scsb-circ microservice to get item request status in scsb.
+     *
+     * @param itemRequestStatus the item request status
+     * @return the response entity
+     */
+    @PostMapping(value = "/requestStatus", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "requestStatus",
+            description ="The Request Status status API returns the Request status of the item in SCSB. It is likely to be used in partner ILS' Discovery systems to retrieve and display request statuses.")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ResponseBody
+    public ResponseEntity itemRequestStatus(@Parameter(description = "Item Barcodes with ',' separated", required = true, name = "itemBarcodes") @RequestBody RequestStatusRequest itemRequestStatus) {
+        String requestStatusResponse = null;
+        try {
+            if (itemRequestStatus == null || itemRequestStatus.getBarcodes() == null
+                    || itemRequestStatus.getBarcodes().isEmpty()) {
+                return new ResponseEntity<>(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, getHttpHeaders(), HttpStatus.BAD_REQUEST);
+            }
+            else if (itemRequestStatus.getBarcodes().size() > 100) {
+                return new ResponseEntity<>(ScsbCommonConstants.MAX_ITEM_BARCODE_REQUEST_EXCEEDED, getHttpHeaders(), HttpStatus.BAD_REQUEST);
+            }
+            requestStatusResponse = restTemplate.postForObject(getScsbCircUrl() + ScsbConstants.URL_REQUEST_ITEM_STATUS_INFORMATION, itemRequestStatus, String.class);
+        } catch (HttpServerErrorException httpServerErrorException) {
+            log.error(ScsbCommonConstants.LOG_ERROR, httpServerErrorException);
+            return new ResponseEntity<>(httpServerErrorException.getResponseBodyAsString(), getHttpHeaders(), httpServerErrorException.getStatusCode());
+        } catch (RuntimeException exception) {
+            log.error(ScsbCommonConstants.LOG_ERROR, exception);
+            return new ResponseEntity<>(ScsbCommonConstants.SCSB_SOLR_CLIENT_SERVICE_UNAVAILABLE, getHttpHeaders(), HttpStatus.SERVICE_UNAVAILABLE);
+        }
+        if (requestStatusResponse == null) {
+            return new ResponseEntity<>(ScsbCommonConstants.ITEM_BARCDE_DOESNOT_EXIST, getHttpHeaders(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(requestStatusResponse, getHttpHeaders(), HttpStatus.OK);
+        }
     }
 
 }
